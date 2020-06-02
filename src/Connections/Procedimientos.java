@@ -10,6 +10,8 @@ public class Procedimientos {
     private static String nombre1, apellido1,nif1, domicilio1, desc1;
     private static int no1, cantidad1,descuentos1, impuestos1;
     private static float precio1, total1;
+    
+   //Proceso almacenado para llenar la tabla Emisor
     public static void entradaEmisor() throws SQLException{
         CallableStatement entrada = SQLConnection.getConexion().prepareCall("{call EntradaEmisor(?,?,?,?)}");
         entrada.setString(1, nombre1);
@@ -18,6 +20,7 @@ public class Procedimientos {
         entrada.setString(4, domicilio1);
         entrada.execute();
     }
+    //Proceso almacenado para llenar la tabla Receptor
     public static void entradaReceptor() throws SQLException{
         CallableStatement entrada = SQLConnection.getConexion().prepareCall("{call EntradaReceptor(?,?,?,?)}");
         entrada.setString(1, nombre1);
@@ -26,6 +29,7 @@ public class Procedimientos {
         entrada.setString(4, domicilio1);
         entrada.execute();
     }
+    //Proceso almacenado para llenar la tabla Compra
     public static void entradaCompra() throws SQLException{
         CallableStatement entrada = SQLConnection.getConexion().prepareCall("{call EntradaCompra(?,?,?,?,?,?,?)}");
         entrada.setInt(1, no1);
@@ -37,7 +41,7 @@ public class Procedimientos {
         entrada.setInt(7, impuestos1);
         entrada.execute();
     }
-    
+    //Se recopilan los datos desde interfaz.java para luego mandarlos al proceso almacenado correspondiente
     public static void datosPersona(String tipo, String nombre, String apellido, String nif, String domicilio){
         nombre1 = nombre;
         apellido1 = apellido;
@@ -57,6 +61,7 @@ public class Procedimientos {
             }
         }
     }
+    //Se recopilan los datos desde interfaz.java para luego mandarlos al proceso almacenado correspondiente
     public static void datosCompra(int no, int cantidad, String desc, float precio, int descuentos, float total, int impuestos){
         no1 = no;
         cantidad1 = cantidad;

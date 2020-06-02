@@ -127,27 +127,32 @@ public class Interfaz extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         Operations.importar();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
+    //Se hace una estructura para la tabla, siendo los datos de un Emisor o Receptor (Cabezales)
     private void setModeloPersona(){
         String[] titulos = {"Nombre","Apellido","NIF","Domicilio"};
         datos.setColumnIdentifiers(titulos);
         tableDatos.setModel(datos);
     }
+    //Se hace una estructura para la tabla, siendo los datos de una Compra (cabezales)
     private void setModeloCompra(){
         String[] titulos = {"No","Cantidad","Descripcion","Precio Unitario", "Descuentos", "Total", "Impuestos"};
         datos.setColumnIdentifiers(titulos);
         tableDatos.setModel(datos);
     }
-    
+    //Llena Rows
+    //Siendo tipoTabla la categoria que selecciono, se llena las Rows con los datos específicos
+    //Se buscan los datos en un arreglo del tipo de la categoria que se usó
     private void setDatos(){
         Object[] dato = new Object[datos.getColumnCount()];
         if(tipoTabla.equals("Emisor")){
+            
             for (Emisor emisor: Operations.arregloE){
                 dato[0] = emisor.getNombre();
                 dato[1] = emisor.getApellido();
                 dato[2] = emisor.getNIF();
                 dato[3] = emisor.getDomicilio();
                 datos.addRow(dato);
+                //Metodo para llenar la base de datos
                 Procedimientos.datosPersona(tipoTabla, emisor.getNombre(), emisor.getApellido(), emisor.getNIF(), emisor.getDomicilio());
             }
         }else if (tipoTabla.equals("Receptor")){
@@ -157,10 +162,10 @@ public class Interfaz extends javax.swing.JFrame {
                 dato[2] = receptor.getNIF();
                 dato[3] = receptor.getDomicilio();
                 datos.addRow(dato);
+                //metodo para llenar base de datos
                 Procedimientos.datosPersona(tipoTabla, receptor.getNombre(), receptor.getApellido(), receptor.getNIF(), receptor.getDomicilio());
             }
         }else {
-            
             for (Compra compra: Operations.arregloC){
                 dato[0] = compra.getNo();
                 dato[1] = compra.getCantidad();
@@ -170,14 +175,18 @@ public class Interfaz extends javax.swing.JFrame {
                 dato[5] = compra.getTotal();
                 dato[6] = compra.getImpuestos();
                 datos.addRow(dato);
+                //Metodo para llenar base de datos
                 Procedimientos.datosCompra(compra.getNo(), compra.getCantidad(), compra.getDescripcion(), compra.getpUnitario(), compra.getDescuentos(), compra.getTotal(), compra.getImpuestos());
             }
         }
+        //Seteamos la tabla con las rows llenas
         tableDatos.setModel(datos);
     }
-    
+    //Se llena la tabla
     private void cOpcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cOpcionActionPerformed
+        //Limpiamos la tabla por cada categoria que se seleccione
         datos.setRowCount(0);
+        //Se verifica qué categoria seleccionó, en base a eso se manda al modelo de cabezales especificado
         String opc = cOpcion.getSelectedItem().toString();
         tipoTabla = opc;
         if(opc.equals("Emisor")){
@@ -187,20 +196,19 @@ public class Interfaz extends javax.swing.JFrame {
         }else if(opc.equals("Detalle Compra")){
             setModeloCompra();
         }
+        //Metodo para llenar Rows
         setDatos();
-        System.out.println(cOpcion.getSelectedItem());
     }//GEN-LAST:event_cOpcionActionPerformed
-
+// Se habilita otra vista, jFrame Formulario
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         Formulario form = new Formulario();
         form.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
+        //Se manda a llamar el metodo getConexion() para que se establezca la conexion
+            //una vez que se inicie la aplicacion 
         Connections.SQLConnection.getConexion();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

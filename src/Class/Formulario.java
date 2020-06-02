@@ -302,7 +302,7 @@ public class Formulario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Envia los datos introducidos al proceso almacenado correspondiente y así llenar la base de datos
     private void botonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCargarActionPerformed
         String nombreR = nombreReceptor.getText();
         String apellidoR = apellidoReceptor.getText();

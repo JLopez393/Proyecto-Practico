@@ -13,11 +13,14 @@ public class SQLConnection {
     public static boolean status = false;
     
     public static Connection getConexion(){
+        //Autenticacion de SQL
         String usuario = "admin";
         String pass = "admin";
         status = false;
+        //Url de base de datos
         String url = "jdbc:sqlserver://localhost:1433;databaseName=ProyectoP";
         try {
+            //Driver de conexion
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             
         }catch (ClassNotFoundException e){
